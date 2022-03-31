@@ -21,7 +21,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.plugins.ide.eclipse.model.Classpath;
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry;
-import org.gradle.plugins.ide.eclipse.model.Variable;
+import org.gradle.plugins.ide.eclipse.model.Library;
 import org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory;
 
 public class AndroidSdkLibraryDependenciesAction implements Action<Classpath> {
@@ -40,10 +40,11 @@ public class AndroidSdkLibraryDependenciesAction implements Action<Classpath> {
 	private ClasspathEntry androidSdkEntry() {
 		FileReferenceFactory fileReferenceFactory = new FileReferenceFactory();
 		Object compileSdkVersion = compileSdkVersion();
-		Variable variable = new Variable(
-				fileReferenceFactory.fromPath("ANDROID_HOME/platforms/" + compileSdkVersion + "/android.jar"));
-		variable.setSourcePath(fileReferenceFactory.fromPath("ANDROID_HOME/sources/" + compileSdkVersion));
-		return variable;
+    String androidHome = System.getenv("ANDROID_HOME");
+		Library lib = new Library(
+				fileReferenceFactory.fromPath(androidHome + "/platforms/" + compileSdkVersion + "/android.jar"));
+		lib.setSourcePath(fileReferenceFactory.fromPath(androidHome + "/sources/" + compileSdkVersion));
+		return lib;
 	}
 
 	private Object compileSdkVersion() {
