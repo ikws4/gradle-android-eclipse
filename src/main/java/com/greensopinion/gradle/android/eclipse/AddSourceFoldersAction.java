@@ -32,12 +32,12 @@ public class AddSourceFoldersAction implements Action<Classpath> {
 		classpath.getEntries().add(testSourceFolder("src/test/java"));
 		classpath.getEntries().add(testSourceFolder("src/test/resources"));
 		classpath.getEntries().add(sourceFolder("build/generated/source/buildConfig/debug"));
-		classpath.getEntries().add(sourceFolder("build/generated/not_namespaced_r_class_sources/debug/r"));
 	}
 
 	private ClasspathEntry sourceFolder(String path) {
 		return new SourceFolder(path, OUTPUT_FOLDER);
 	}
+  
 	private ClasspathEntry testSourceFolder(String path) {
 		SourceFolder entry = new SourceFolder(path, TEST_OUTPUT_FOLDER);
 		entry.getEntryAttributes().put("test","true");
